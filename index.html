@@ -3,13 +3,89 @@
     <head>
         <style>
             body {
-                background: url("Utopia.jpg");
-                background-size: cover;
-                background-repeat: no-repeat;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            #enter-utopia {
+                display: none;   
+            }
+            #utopia-container {
+                display: inline-flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            #utopia-img {
+                position: absolute;
+                display: none;
+                max-height: 90vh;
+            }
+            
+            #cv {
+                position: absolute;
+                display: none;
+                z-index: 100;
             }
         </style>
     </head>
     <body>
-        Hello world. Testing GitHub changes work. Image changes deployed.
+        <div id="image-url">IMAGE URL:</div>
+        <input name="textbox1" id="textbox1" type="text" />
+        <input name="buttonExecute" id="buttonExecute" onclick="getImage(document.getElementById('textbox1').value)" type="button" value="Get Utopia." />
+        <a onclick = "screenshot()" id="enter-utopia" href="#">Click here to experience utopia.</a>
+        <div id="utopia-container"> 
+            <img id="utopia-img"> 
+            <canvas id="cv"></canvas>
+        </div>
     </body>
+    
+    <script>
+        var nativeH;
+        var nativeW;
+        var image;
+        var container;
+        
+        function getImage(url) {
+            console.log(url);
+            document.getElementById("image-url").style.display = "none";
+            document.getElementById("textbox1").style.display = "none";
+            document.getElementById("buttonExecute").style.display = "none";
+            document.getElementById("utopia-img").src = url;
+            document.getElementById("utopia-img").style.display = "block";
+            document.getElementById("utopia-img").style.width = "100%";
+            imageLoaded();
+            document.getElementById("enter-utopia").style.display = "block";
+        }
+        
+        function imageLoaded() {
+            image = document.getElementById("utopia-img");
+            container = document.getElementById("utopia-container");
+            nativeH = image.offsetHeight;
+            nativeW = image.offsetWidth;
+            console.log(nativeH + " " + nativeW);
+            container.style.height = nativeH + "px";
+            container.style.width = nativeW + "px";
+        }        
+        
+        function screenshot() {
+                var canvas = document.getElementById("cv");
+                var height = image.offsetHeight;
+                var width = image.offsetWidth;
+                console.log(height + " " + width);
+                image.style.height = height * .8 + "px";
+                image.style.width = width * .8 + "px";
+                canvas.style.display = "block";
+                canvas.height = height * .8;
+                canvas.width = width * .8;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(image, 0, 0, width * .8, height * .8);
+                canvas.style.height = nativeH + "px";
+                canvas.style.width = nativeW + "px";
+        }
+    </script>
 </html>
